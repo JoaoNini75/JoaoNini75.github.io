@@ -7,6 +7,20 @@
     <title>João Nini's Website</title>
 </head>
 <body>
-    <h2>Hello, world 2!</h2>
+    <h2>Hello, world!</h2>
+
+    <br><br>
+    <div id="pomodoro">
+        <label for="timeIn">Pomodoro time:</label>
+        <input type="time" id="timeIn" name="timeIn" step="1">
+        <p id="time">00:45:00</p>
+        <button id="startStop">Start</button> 
+        <button id="reset">Reset</button><br><br><br>
+
+        <label for="audioFileChooser">Upload an audio file to play when the timer ends:</label><br><br>
+        <input id="audioFileChooser" type="file">
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
