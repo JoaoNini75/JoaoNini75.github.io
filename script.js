@@ -134,9 +134,16 @@ async function playAudioFile(file) {
 
 async function endCount() {
     stopOrReset();
-    //let audio = new Audio('audio/fard_reverb.mp3');
-    //await audio.play();
+    const currTitle = document.title;
+    document.title = "Time is over!";
+
     if (audioFile != null)
         await playAudioFile(audioFile);
-    alert("Time is over!");
+    else {
+        let audio = new Audio('audios/default_timer_end.mp3');
+        await audio.play();
+    }
+    
+    alert("Pomodoro timer ended");
+    document.title = currTitle;
 }
