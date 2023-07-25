@@ -11,8 +11,16 @@ let interval = null;
 let statuss = "stopped";
 const startStop = document.querySelector("#startStop");
 const timeIn = document.getElementById("timeIn");
-timeIn.value = "00:45:00";
 
+timeIn.value = "00:45:00";
+const sst = sessionStorage.getItem("time");
+if (sst != null) {
+    timeIn.value = sst;
+    setTimeInValues(sst);
+    setDisplayValues();
+}  
+
+let selectedAudio = document.getElementById("audioList");
 let audioFileElem = document.getElementById("audioFileChooser");
 let audioFile = null;
 
@@ -46,22 +54,7 @@ function stopWatch(isCountdown) {
         }
     }
     
-    if (seconds < 10 && seconds.toString().length == 1)
-      displaySeconds = "0" + seconds.toString();
-    else
-      displaySeconds = seconds;
-
-    if (minutes < 10 && minutes.toString().length == 1)
-      displayMinutes = "0" + minutes.toString();
-    else
-      displayMinutes = minutes;
-      
-    if (hours < 10 && hours.toString().length == 1)
-      displayHours = "0" + hours.toString();
-    else
-      displayHours = hours;  
-    
-    display.innerText = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+    setDisplayValues();
 }
 
 function stopOrReset() {
@@ -69,9 +62,7 @@ function stopOrReset() {
     startStop.innerText = "Start";
     startStop.style.backgroundColor = "#33dd33";
     statuss = "stopped";
-    let timeInVal = timeIn.value;
-    setTimeInValues(timeInVal);
-    display.innerText = timeInVal; 
+    display.innerText = setTimeInValues(timeIn.value); 
 }
 
 document.querySelector("#startStop").onclick = function() {
@@ -90,13 +81,13 @@ document.querySelector("#startStop").onclick = function() {
 
 document.querySelector("#reset").onclick = function() {
     stopOrReset();
-    let timeInVal = timeIn.value;
-    setTimeInValues(timeInVal);
-    display.innerText = timeInVal;       
+    display.innerText = setTimeInValues(timeIn.value);     
 }
 
 timeIn.onchange = function() {
-    display.innerText = timeIn.value;
+    const actualTime = getActualTime(timeIn.value);
+    display.innerText = actualTime;
+    sessionStorage.setItem("time", actualTime);
 }
 
 function setTimeInValues(timeInVal) {
@@ -104,6 +95,33 @@ function setTimeInValues(timeInVal) {
     hours = hhmmss[0];
     minutes = hhmmss[1];
     seconds = hhmmss[2];
+    return getActualTime(timeInVal);
+}
+
+function getActualTime(timeStr) {
+    const mainString = timeStr.substring(0, 7);
+    const lastDigit = (parseInt(timeStr.substring(7)) - 1).toString();
+    console.log(mainString + lastDigit);
+    return mainString + lastDigit;
+}
+
+function setDisplayValues() {
+    if (seconds < 10 && seconds.toString().length == 1)
+        displaySeconds = "0" + seconds.toString();
+    else
+        displaySeconds = seconds;
+
+    if (minutes < 10 && minutes.toString().length == 1)
+        displayMinutes = "0" + minutes.toString();
+    else
+        displayMinutes = minutes;
+
+    if (hours < 10 && hours.toString().length == 1)
+        displayHours = "0" + hours.toString();
+    else
+        displayHours = hours;  
+
+    display.innerText = displayHours + ":" + displayMinutes + ":" + displaySeconds;
 }
 
 audioFileElem.onchange = function() {
@@ -111,7 +129,13 @@ audioFileElem.onchange = function() {
 }
 
 function readFile(file) {
-    var fileReader = new FileReader();
+    let fileType = audioFileElem.value.split(".").slice(-1)[0];
+    if (fileType != "mp3") {
+        alert("Only mp3 files are allowed.");
+        return;
+    }
+
+    let fileReader = new FileReader();
         fileReader.readAsArrayBuffer(file);
         fileReader.onload = function(e) {
             audioFile = e.target.result;
@@ -119,15 +143,15 @@ function readFile(file) {
         }
 }
 
-async function playAudioFile(file) {
-    var context = new window.AudioContext();
-        context.decodeAudioData(file, function(buffer) {
-            var source = context.createBufferSource();
-                source.buffer = buffer;
-                source.loop = false;
-                source.connect(context.destination);
-                source.start(0); 
-        });
+async function playAudioFile() {
+    let context = new window.AudioContext();
+    await context.decodeAudioData(audioFile, function(buffer) {
+        let source = context.createBufferSource();
+            source.buffer = buffer;
+            source.loop = false;
+            source.connect(context.destination);
+            source.start(0); 
+    });
 }
 
 async function endCount() {
@@ -135,13 +159,13 @@ async function endCount() {
     const currTitle = document.title;
     document.title = "Time is over!";
 
-    if (audioFile != null)
-        await playAudioFile(audioFile);
-    else {
-        let audio = new Audio('audios/default_timer_end.mp3');
+    if (audioFile != null) {
+        await playAudioFile();
+    } else {
+        let audio = new Audio(`audios/${selectedAudio.value}.mp3`);
         await audio.play();
     }
     
-    alert("Pomodoro timer ended");
+    alert("Pomodoro timer ended.");
     document.title = currTitle;
 }
