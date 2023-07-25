@@ -100,7 +100,6 @@ timeIn.onchange = function() {
 }
 
 function setTimeInValues(timeInVal) {
-    console.log(timeInVal);
     let hhmmss = timeInVal.split(":");
     hours = hhmmss[0];
     minutes = hhmmss[1];
@@ -117,7 +116,6 @@ function readFile(file) {
         fileReader.onload = function(e) {
             audioFile = e.target.result;
             console.log(("Filename: '" + file.name + "'"), ( "(" + ((Math.floor(file.size/1024/1024*100))/100) + " MB)" ));
-            console.log(audioFile);
         }
 }
 
