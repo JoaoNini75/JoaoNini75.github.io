@@ -1,3 +1,5 @@
+const AUDIO_FILE_TYPES_SUPPORTED = [`.3gp`, `.aa`, `.aac`, `.aax`, `.act`, `.aiff`, `.alac`, `.amr`, `.ape`, `.au`, `.awb`, `.dss`, `.dvf`, `.flac`, `.gsm`, `.iklax`, `.ivs`, `.m4a`, `.m4b`, `.m4p`, `.mmf`, `.movpkg`, `.mp3`, `.mpc`, `.msv`, `.nmf`, `.ogg`, `.oga`, `.mogg`, `.opus`, `.ra, .rm`, `.ra`, `.raw`, `.rf64`, `.sln`, `.tta`, `.voc`, `.vox`, `.wav`, `.wma`, `.wv`, `.webm`, `.8svx`, `.cda`];
+
 let seconds = 0;
 let minutes = 45;
 let hours = 0;
@@ -129,9 +131,11 @@ audioFileElem.onchange = function() {
 }
 
 function readFile(file) {
-    let fileType = audioFileElem.value.split(".").slice(-1)[0];
-    if (fileType != "mp3") {
-        alert("Only mp3 files are allowed.");
+    let fileType = "." + audioFileElem.value.split(".").slice(-1)[0];
+    console.log(fileType);
+    if (!AUDIO_FILE_TYPES_SUPPORTED.includes(fileType)) {
+        alert("Only audio files are supported.");
+        audioFileElem.value = null;
         return;
     }
 
