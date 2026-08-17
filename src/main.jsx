@@ -4,6 +4,17 @@ import './styles.css'
 
 const projects = [
   {
+    title: 'Formal Verification of Programs Equivalence',
+    kind: "Master's Thesis",
+    summary: 'A transpiler and analysis tool exploring program equivalence through AST-level transformations.',
+    tech: ['OCaml', 'Python', 'JavaScript', 'HTML', 'CSS', 'ASTs'],
+    details: [
+      'Developed bip2ml, a transpiler that transforms BipLang into OCaml.',
+      'Applied AST-level transformations to support equivalence-based program proofs.',
+      'Built a local web app to visualize input and output ASTs and analyze the transformation pipeline.'
+    ]
+  },
+  {
     title: 'Campus Management Application',
     kind: "Bachelor's Final Project",
     summary: 'A full-stack campus application built by a five-person team, with a strong focus on backend design and resilience.',
@@ -23,17 +34,6 @@ const projects = [
       'Contributed to a layered, microservices-based social network.',
       'Worked across backend and frontend integration.',
       'The system included OpenAPI 3.0 documentation and full-stack integration.'
-    ]
-  },
-  {
-    title: 'Formal Verification of Programs Equivalence',
-    kind: "Master's Thesis",
-    summary: 'A transpiler and analysis tool exploring program equivalence through AST-level transformations.',
-    tech: ['OCaml', 'Python', 'JavaScript', 'HTML', 'CSS', 'ASTs'],
-    details: [
-      'Developed bip2ml, a transpiler that transforms BipLang into OCaml.',
-      'Applied AST-level transformations to support equivalence-based program proofs.',
-      'Built a local web app to visualize input and output ASTs and analyze the transformation pipeline.'
     ]
   }
 ]
@@ -99,7 +99,7 @@ function App() {
     const savedTheme = localStorage.getItem('theme')
     return savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
   })
-  const [open, setOpen] = useState({ about: false, experience: null, projects: null, skills: false })
+  const [open, setOpen] = useState({ about: false, experience: {}, projects: {}, skills: false })
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -153,15 +153,10 @@ function App() {
               <a href="mailto:nini7500@gmail.com"><Icon name="mail" /> Email</a>
             </div>
           </div>
-          <div className="hero-side" aria-hidden="true">
-            <div className="hero-monogram">JN</div>
-            <div className="hero-line"></div>
-            <p>Full-stack<br/>Backend-focused</p>
-          </div>
         </section>
 
         <section id="about" className="section content-section">
-          <SectionHeading number="01" title="About Me" />
+          <SectionHeading title="About Me" />
           <div className="section-body narrow">
             <p className="lead">I'm a software engineer based in Lisbon with a background in Computer Science and experience building full-stack applications, with a particular interest in backend development.</p>
             {open.about && (
@@ -175,11 +170,11 @@ function App() {
         </section>
 
         <section id="experience" className="section content-section">
-          <SectionHeading number="02" title="Experience" />
+          <SectionHeading title="Experience" />
           <div className="section-body">
             <div className="timeline">
               {experience.map((item, index) => (
-                <article className={`experience-item ${open.experience === index ? 'expanded' : ''}`} key={item.company}>
+                <article className={`experience-item ${open.experience[index] ? 'expanded' : ''}`} key={item.company}>
                   <div className="timeline-dot"></div>
                   <div className="experience-card">
                     <div className="org-row">
@@ -188,8 +183,8 @@ function App() {
                       <time>{item.dates}</time>
                     </div>
                     <p className="summary">{item.summary}</p>
-                    {open.experience === index && <ul className="detail-list">{item.details.map((d) => <li key={d}>{d}</li>)}</ul>}
-                    <ExpandButton open={open.experience === index} onClick={() => setOpen({ ...open, experience: open.experience === index ? null : index })} />
+                    {open.experience[index] && <ul className="detail-list">{item.details.map((d) => <li key={d}>{d}</li>)}</ul>}
+                    <ExpandButton open={open.experience[index]} onClick={() => setOpen({ ...open, experience: { ...open.experience, [index]: !open.experience[index] } })} />
                   </div>
                 </article>
               ))}
@@ -198,18 +193,18 @@ function App() {
         </section>
 
         <section id="projects" className="section content-section">
-          <SectionHeading number="03" title="Projects" />
+          <SectionHeading title="Projects" />
           <div className="section-body">
-            <p className="section-intro">A selection of academic and technical work. The collection is intentionally easy to extend as new projects are added.</p>
+            <p className="section-intro">A selection of my most interesting projects.</p>
             <div className="project-list">
               {projects.map((project, index) => (
-                <article className={`project-card ${open.projects === index ? 'expanded' : ''}`} key={project.title}>
-                  <div className="project-topline"><span>{project.kind}</span><span>0{index + 1}</span></div>
+                <article className={`project-card ${open.projects[index] ? 'expanded' : ''}`} key={project.title}>
+                  <div className="project-topline"><span>{project.kind}</span></div>
                   <h3>{project.title}</h3>
                   <p>{project.summary}</p>
                   <div className="tags">{project.tech.map((t) => <span key={t}>{t}</span>)}</div>
-                  {open.projects === index && <div className="project-details"><h4>What I worked on</h4><ul>{project.details.map((d) => <li key={d}>{d}</li>)}</ul></div>}
-                  <ExpandButton open={open.projects === index} label={open.projects === index ? 'Show less' : 'Explore project'} onClick={() => setOpen({ ...open, projects: open.projects === index ? null : index })} />
+                  {open.projects[index] && <div className="project-details"><h4>What I worked on</h4><ul>{project.details.map((d) => <li key={d}>{d}</li>)}</ul></div>}
+                  <ExpandButton open={open.projects[index]} label={open.projects[index] ? 'Show less' : 'Explore project'} onClick={() => setOpen({ ...open, projects: { ...open.projects, [index]: !open.projects[index] } })} />
                 </article>
               ))}
             </div>
@@ -217,7 +212,7 @@ function App() {
         </section>
 
         <section id="skills" className="section content-section">
-          <SectionHeading number="04" title="Skills & Education" />
+          <SectionHeading title="Skills & Education" />
           <div className="section-body skills-grid">
             <div className="education-panel">
               <div className="org-row education-row">
@@ -248,7 +243,7 @@ function App() {
         </section>
 
         <section id="contact" className="section content-section contact-section">
-          <SectionHeading number="05" title="Contact" />
+          <SectionHeading title="Contact" />
           <div className="contact-body">
             <div>
               <p className="lead">Interested in working together or just want to talk software?</p>
@@ -267,7 +262,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="footer"><span>© {new Date().getFullYear()} João Nini</span><span>Built with React</span></footer>
+      <footer className="footer"><span>© {new Date().getFullYear()} João Nini</span></footer>
     </div>
   )
 }

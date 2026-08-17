@@ -1,4 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#2563eb"/>
-  <text x="32" y="40" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="white">JN</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">JN monogram</title>
+  <desc id="desc">A white J and N monogram with a blue diagonal connecting stroke on a deep navy rounded square.</desc>
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1E8BFF"/>
+      <stop offset="100%" stop-color="#1557D6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="4" y="4" width="248" height="248" rx="48" fill="#071A3D"/>
+
+  <!-- J -->
+  <path
+    d="M78 66H108V158c0 25-14 43-38 43-15 0-28-7-38-19l22-21c5 7 10 10 17 10 9 0 15-6 15-15V66Z"
+    fill="#FFFFFF"/>
+
+  <!-- N -->
+  <path
+    d="M171 66H201V181H171V66Z"
+    fill="#FFFFFF"/>
+
+  <!-- Blue diagonal linking the monogram -->
+  <path
+    d="M108 66H139L210 137V180H180L108 108V66Z"
+    fill="url(#blue)"/>
+
+  <!-- Preserve a clean white right-hand N stroke above the diagonal -->
+  <path
+    d="M201 66H216V201H186V107L201 122V66Z"
+    fill="#FFFFFF"/>
 </svg>
