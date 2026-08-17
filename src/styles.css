@@ -103,7 +103,7 @@ time { color: var(--muted); font-size: .84rem; white-space: nowrap; }
 .project-card > p { margin: 0; color: var(--muted); font-size: .92rem; }
 .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
 .tags span { border: 1px solid var(--border); background: var(--bg); padding: 4px 8px; border-radius: 999px; color: var(--muted); font-size: .75rem; }
-.project-card .expand-button { margin-top: auto; }
+.project-card .expand-button { margin-top: auto; margin-bottom: -15px; min-height: 35px; }
 .project-details { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 16px; }
 .project-details h4 { margin: 0; font-size: .86rem; }
 
