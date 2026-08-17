@@ -42,8 +42,8 @@ const experience = [
   {
     company: 'Opensoft',
     role: 'Software Engineer',
-    dates: 'January 2026 – Present',
-    logo: 'https://opensoft.pt/favicon.ico',
+    dates: 'January 2026 - Present',
+    logo: 'https://opensoft.pt/wp-content/uploads/2024/08/logo-square-transparent.png',
     summary: 'Working on modernizing and maintaining enterprise applications across backend and frontend technologies.',
     details: [
       'Migrated legacy applications to modern technologies including React, Kotlin and Java.',
@@ -54,8 +54,8 @@ const experience = [
   {
     company: 'Fidelidade',
     role: 'Software Engineer (Summer Intern)',
-    dates: 'July 2024 – August 2024',
-    logo: 'https://www.fidelidade.pt/favicon.ico',
+    dates: 'July 2024 - August 2024',
+    logo: 'https://www.fidelidade.pt/style%20library/FidelidadeBranding/img/favicon.ico',
     summary: 'Worked on OutSystems applications and performance analysis.',
     details: [
       'Completed OutSystems training and resolved application issues.',
@@ -221,7 +221,7 @@ function App() {
           <div className="section-body skills-grid">
             <div className="education-panel">
               <div className="org-row education-row">
-                <div className="logo-wrap nova-logo"><img src="https://www.unl.pt/favicon.ico" alt="" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement.classList.add('logo-fallback') }} /><span>N</span></div>
+                <div className="logo-wrap nova-logo"><img src="https://www.fct.unl.pt/sites/default/files/favicon_3.ico" alt="" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement.classList.add('logo-fallback') }} /><span>N</span></div>
                 <div className="org-copy"><h3>Faculdade de Ciências e Tecnologia, Universidade Nova de Lisboa</h3><p>Integrated MSc in Computer Science</p></div>
               </div>
               <div className="education-meta"><span>Completed December 2025</span><span>BSc: 14/20 · MSc: 15/20</span></div>
